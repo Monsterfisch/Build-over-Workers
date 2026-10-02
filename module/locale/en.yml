@@ -1,0 +1,17 @@
+group: Building over workers
+group_descr: |
+  Place buildings and walls where your workers are standing. Anyone caught underneath is
+  moved to the nearest free spot next to it.
+buildings: Buildings can be placed over workers
+buildings_tooltip: |
+  You can place a building on top of your own workers. They step aside to the closest free
+  tile next to the new building and carry on with their job. Soldiers and enemy units still
+  block the spot, as before.
+walls: Walls can be placed over workers
+walls_tooltip: |
+  The same for walls: workers standing in the way are moved next to the wall, on the side
+  they were on when possible.
+allies: Allies' workers count as friendly
+allies_tooltip: |
+  Workers of players on your team can be built over too. When this is off, only your own
+  workers can.

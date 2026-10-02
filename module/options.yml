@@ -1,0 +1,31 @@
+options:
+- display: GroupBox
+  category: [Build Over Workers]
+  header: '{{group}}'
+  text: '{{group_descr}}'
+  hasHeader: true
+  children:
+  - url: build-over-workers.buildings
+    name: build-over-workers-buildings
+    text: '{{buildings}}'
+    tooltip: '{{buildings_tooltip}}'
+    display: Switch
+    contents:
+      type: boolean
+      value: true
+  - url: build-over-workers.walls
+    name: build-over-workers-walls
+    text: '{{walls}}'
+    tooltip: '{{walls_tooltip}}'
+    display: Switch
+    contents:
+      type: boolean
+      value: true
+  - url: build-over-workers.allies
+    name: build-over-workers-allies
+    text: '{{allies}}'
+    tooltip: '{{allies_tooltip}}'
+    display: Switch
+    contents:
+      type: boolean
+      value: true
