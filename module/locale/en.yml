@@ -11,6 +11,10 @@ walls: Walls can be placed over workers
 walls_tooltip: |
   The same for walls: workers standing in the way are moved next to the wall, on the side
   they were on when possible.
+keep_on_walls: Repairing a wall leaves people on top of it
+keep_on_walls_tooltip: |
+  Troops and people standing on top of a wall or stairs stay where they are when you repair
+  that wall. Only people on the ground underneath a new wall are moved aside.
 allies: Allies' workers count as friendly
 allies_tooltip: |
   Workers of players on your team can be built over too. When this is off, only your own

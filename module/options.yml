@@ -21,6 +21,14 @@ options:
     contents:
       type: boolean
       value: true
+  - url: build-over-workers.keepOnWalls
+    name: build-over-workers-keep-on-walls
+    text: '{{keep_on_walls}}'
+    tooltip: '{{keep_on_walls_tooltip}}'
+    display: Switch
+    contents:
+      type: boolean
+      value: true
   - url: build-over-workers.allies
     name: build-over-workers-allies
     text: '{{allies}}'

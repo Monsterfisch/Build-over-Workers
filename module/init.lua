@@ -15,6 +15,10 @@
      whose check (validateWallPlacementAtTile) removed the unit on the tile for some wall
      types and left it inside the wall for the others.
 
+  4. Troops and people standing on top of a wall (or stairs) are not moved when it is built
+     over - a repair - only those on the ground beneath a new one are (keepOnWalls). The
+     game keeps a unit's standing height in unit +0xBC, 0 on the ground.
+
   Every address is found by pattern scan or read out of the instruction that uses it, so the
   module runs on Stronghold Crusader.exe and Stronghold_Crusader_Extreme.exe alike.
 ]]
@@ -23,7 +27,7 @@ local templates = require("templates")
 
 local MODULE_NAME = "build-over-workers"
 
-local DEFAULTS = { buildings = true, walls = true, allies = true }
+local DEFAULTS = { buildings = true, walls = true, allies = true, keepOnWalls = true }
 
 ---------------------------------------------------------------------------------------
 -- What the game's code looks like where this module touches it
@@ -87,6 +91,7 @@ local U_TYPE = 0x8E
 local U_OWNER = 0x96
 local U_X = 0xC4
 local U_Y = 0xC6
+local U_BUILDING_HEIGHT = 0xBC   -- 0 on the ground; 4 on a wall, 0xC on stairs (the game keeps it)
 local U_TILE = 0xD4
 local U_DEST_X = 0xEC
 local U_DEST_Y = 0xEE
@@ -276,7 +281,10 @@ local function makeDrain(m)
           guard = guard - 1
           local base = m.units + unit * UNIT_SIZE
           local nextUnit = word(base + U_NEXT)
-          if word(base + U_STATE) ~= 0 then
+          -- Someone standing on top of a wall or stairs when it is built over (a repair) is
+          -- not under anything: they stay. Only people on the ground beneath it are moved.
+          local onTop = m.keepOnWalls and signedWord(base + U_BUILDING_HEIGHT) ~= 0
+          if word(base + U_STATE) ~= 0 and not onTop then
             moveUnit(unit)
           end
           unit = nextUnit
@@ -294,6 +302,7 @@ local function enable(self, config)
   local buildings = setting(config, "buildings")
   local walls = setting(config, "walls")
   local allies = setting(config, "allies")
+  local keepOnWalls = setting(config, "keepOnWalls")
 
   local placeTest = scan(AOB_PLACE_TEST, "the building placement test")
   local wallTest = scan(AOB_WALL_TEST, "the wall placement test")
@@ -326,6 +335,7 @@ local function enable(self, config)
     tms = tms,
     valid = readOperand(setPos, SET_POSITION_VALID, "the map's valid tiles"),
     rows = readOperand(setPos, SET_POSITION_ROWS, "the map rows"),
+    keepOnWalls = keepOnWalls,
     setPosition = setPos,
     setDestination = setDest,
   }

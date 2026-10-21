@@ -1,7 +1,7 @@
 # Build Over Workers
 
 **Author**: Monsterfish
-**Version**: 1.0.1
+**Version**: 1.0.2
 
 Lets you place buildings and walls where your workers are standing. Every part can be
 switched off in the settings.
@@ -21,6 +21,11 @@ The same for walls.
 
 Workers of players on your team can be built over too. Switch this off to allow only your
 own workers.
+
+## Repairing a wall leaves people on top of it
+
+Troops and people standing on top of a wall or stairs stay where they are when you build
+over it to repair it. Only people on the ground underneath a new wall are moved aside.
 
 ## Nobody disappears
 
